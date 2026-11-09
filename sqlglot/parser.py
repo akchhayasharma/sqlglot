@@ -6703,8 +6703,8 @@ class Parser:
                 this.set("typed", self.dialect.TYPED_DIVISION)
                 this.set("safe", self.dialect.SAFE_DIVISION)
 
-                    if isinstance(this, exp.Mod):
-                        this.set("safe", self.dialect.SAFE_DIVISION)
+            if isinstance(this, exp.Mod):
+                this.set("safe", self.dialect.SAFE_DIVISION)
 
         return this
 

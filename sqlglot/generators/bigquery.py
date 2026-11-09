@@ -783,8 +783,8 @@ class BigQueryGenerator(generator.Generator):
             expression.expression.replace(
                 exp.Nullif(this=expression.expression.copy(), expression=exp.Literal.number(0))
             )
-            
-            this = expression.this
+
+        this = expression.this
         expr = expression.expression
         return self.func(
             "MOD",
