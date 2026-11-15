@@ -8,7 +8,7 @@ from sqlglot.optimizer.annotate_types import annotate_types
 from sqlglot.optimizer.qualify import qualify
 from sqlglot.optimizer.qualify_columns import quote_identifiers
 from tests.dialects.test_dialect import Validator
-from sqlglot.errors import ErrorLevel
+from sqlglot.errors import ErrorLevel, ParseError
 
 
 class TestClickhouse(Validator):
@@ -1015,6 +1015,17 @@ class TestClickhouse(Validator):
                         self.validate_identity(sql)
 
         self.validate_identity("SELECT []")
+
+    def test_xor_errors(self):
+        for sql in ("SELECT xor()", "SELECT xor(;)", "SELECT xor(,)", "SELECT xor(0, xor())"):
+            with self.subTest(sql=sql), self.assertRaises(ParseError):
+                self.parse_one(sql)
+
+        with self.assertRaises(ParseError):
+            exp.xor()
+
+        with self.assertRaises(ParseError):
+            exp.and_()
 
     def test_json_extract(self):
         for name in ("JSONExtractRaw", "JSONExtractString"):

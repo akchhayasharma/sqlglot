@@ -2826,6 +2826,9 @@ def _combine(
         if expression is not None
     ]
 
+    if not conditions:
+        raise ParseError("Expected at least one argument")
+
     this, *rest = conditions
     if rest and wrap:
         this = _wrap(this, Connector)
